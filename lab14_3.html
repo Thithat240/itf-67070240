@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css2">
+</head>
+<body>
+    <div class="flex">
+        <div class="profile" id="profile">
+            <div class="notify">
+                    <p>1</p>
+            </div>
+        </div>
+        <a id="username" class="link" href="https://github.com/Thithat240/itf-67070240">Thithat Kreangkriwit 67070240</a>
+        <div class="input">
+            <label>Set Username</label><input id="input-name" type="text"><button onclick="setName()">set</button>
+            <label>Set Image</label><input id="Input-url" type="text"><button onclick="setImg()">set</button>
+        </div>
+
+        <div class="input">
+            <input id="name" type="text">
+            <input id="tel" type="text">
+            <button onclick="addRow()">add</button>
+            <button onclick="saveCSV()">export</button>
+            <table id="table">
+                <tr>
+                    <th>name</th>
+                    <th>phone</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        var telphone = [];
+        const name = document.getElementById("username");
+        const inputName = document.getElementById("input-name");
+        const profile = document.getElementById("profile");
+        const InputUrl = document.getElementById("Input-url");
+        const table = document.getElementById("table")
+        const telname = document.getElementById("name")
+        const tel = document.getElementById("tel")
+
+
+        function setName(){
+            name.textContent = inputName.value;
+            inputName.value= "";
+        }
+        function setImg(){
+            profile.style.backgroundImage = "url(" + InputUrl.value + ")";
+        }
+        function addRow(){
+            const row = document.createElement("tr");
+            const cell1 = document.createElement("td");
+            const cell2 = document.createElement("td");
+            cell1.textContent = telname.value
+            cell2.textContent = tel.value
+            row.appendChild(cell1);
+            row.appendChild(cell2);
+            table.appendChild(row)
+            let arr = [];
+            arr.push(telname.value);
+            arr.push(tel.value);
+            telphone.push(arr);
+            console.log(telphone);
+        }
+        function saveCSV() {
+            const csvContent = telphone.map(row => row.join(",")).join("\n"); // Convert array to CSV string
+            const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", "data.csv");
+            link.style.visibility = "hidden";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+};
+    </script> 
+</body>
+</html>
